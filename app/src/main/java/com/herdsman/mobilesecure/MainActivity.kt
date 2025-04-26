@@ -1,11 +1,36 @@
 package com.herdsman.mobilesecure
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.herdsman.mobilesecure.databinding.ActivityMainBinding
+import com.herdsman.mobilesecure.databinding.LayoutItemBinding
+import kotlinx.coroutines.launch
+import org.apache.commons.io.IOUtils
+import java.nio.charset.StandardCharsets
+
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        init {
+            System.loadLibrary("mobilesecure")
+        }
+
+        var itemList = listOf<Item>()
+    }
+
+    class Item {
+        lateinit var title: String
+        lateinit var content: String
+    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -15,20 +40,41 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Example of a call to a native method
-        binding.sampleText.text = stringFromJNI()
+        lifecycleScope.launch {
+            itemList = Gson().fromJson(DbHelper.readString(this@MainActivity, "list.json"), arrayOf<Item>()::class.java).toList()
+            binding.recyclerView.adapter = ItemAdapter()
+        }
+
     }
 
-    /**
-     * A native method that is implemented by the 'mobilesecure' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(): String
+    class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
-    companion object {
-        // Used to load the 'mobilesecure' library on application startup.
-        init {
-            System.loadLibrary("mobilesecure")
+        class ViewHolder(private var binding: LayoutItemBinding) : RecyclerView.ViewHolder(binding.root) {
+            fun bind(position: Int) {
+                val item = itemList!![position]
+                binding.titleView.text = item.title
+                binding.contentView.text = item.content
+
+                binding.root.setOnClickListener {
+                    with(binding.root.context) {
+                        val intent = Intent(this, ViewActivity::class.java)
+                        intent.putExtra("index", position)
+                        this.startActivity(intent)
+                    }
+                }
+            }
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+        override fun getItemCount(): Int = itemList!!.size
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.bind(position)
         }
     }
+
+    external fun stringFromJNI(): String
+
+
 }
