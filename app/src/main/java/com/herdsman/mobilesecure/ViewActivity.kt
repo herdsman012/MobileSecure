@@ -27,7 +27,7 @@ class ViewActivity : AppCompatActivity() {
 
         supportActionBar?.title = item.title
 
-        val html = Html.fromHtml(DbHelper.readString(this, "tmp.html"), Html.FROM_HTML_MODE_LEGACY, object : Html.ImageGetter {
+        val html = Html.fromHtml(DbHelper.readString(this, item.src), Html.FROM_HTML_MODE_LEGACY, object : Html.ImageGetter {
             override fun getDrawable(source: String?): Drawable? {
                 source?.let {
                     Log.d("herdsman_log", it)

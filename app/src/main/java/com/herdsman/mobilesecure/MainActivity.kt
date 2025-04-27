@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     class Item {
         lateinit var title: String
         lateinit var content: String
+        lateinit var src: String
     }
 
     private lateinit var binding: ActivityMainBinding
