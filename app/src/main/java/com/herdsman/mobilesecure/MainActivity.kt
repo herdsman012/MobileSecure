@@ -2,28 +2,20 @@ package com.herdsman.mobilesecure
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.herdsman.mobilesecure.databinding.ActivityMainBinding
 import com.herdsman.mobilesecure.databinding.LayoutItemBinding
 import kotlinx.coroutines.launch
-import org.apache.commons.io.IOUtils
-import java.nio.charset.StandardCharsets
 
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        init {
-            System.loadLibrary("mobilesecure")
-        }
-
         var itemList = listOf<Item>()
     }
 
@@ -51,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         class ViewHolder(private var binding: LayoutItemBinding) : RecyclerView.ViewHolder(binding.root) {
             fun bind(position: Int) {
-                val item = itemList!![position]
+                val item = itemList[position]
                 binding.titleView.text = item.title
                 binding.contentView.text = item.content
 
@@ -67,14 +59,10 @@ class MainActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-        override fun getItemCount(): Int = itemList!!.size
+        override fun getItemCount(): Int = itemList.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bind(position)
         }
     }
-
-    external fun stringFromJNI(): String
-
-
 }

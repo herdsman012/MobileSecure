@@ -55,4 +55,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation("commons-io:commons-io:2.8.0")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("commons-codec:commons-codec:1.15")
 }
