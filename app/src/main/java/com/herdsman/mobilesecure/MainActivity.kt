@@ -9,27 +9,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.herdsman.mobilesecure.databinding.ActivityMainBinding
 import com.herdsman.mobilesecure.databinding.LayoutItemBinding
 import kotlinx.coroutines.launch
-import org.apache.commons.io.IOUtils
-import java.nio.charset.StandardCharsets
 
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        init {
-            System.loadLibrary("mobilesecure")
-        }
-
         var itemList = listOf<Item>()
     }
 
     class Item {
         lateinit var title: String
         lateinit var content: String
+        lateinit var src: String
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -39,6 +33,9 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Log.d("herdsman_log", packageCodePath)
+        Log.d("herdsman_log", AESDecryption.bytesToHex(AESDecryption.getKey(this)))
 
         lifecycleScope.launch {
             itemList = Gson().fromJson(DbHelper.readString(this@MainActivity, "list.json"), arrayOf<Item>()::class.java).toList()
@@ -51,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         class ViewHolder(private var binding: LayoutItemBinding) : RecyclerView.ViewHolder(binding.root) {
             fun bind(position: Int) {
-                val item = itemList!![position]
+                val item = itemList[position]
                 binding.titleView.text = item.title
                 binding.contentView.text = item.content
 
@@ -67,14 +64,10 @@ class MainActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-        override fun getItemCount(): Int = itemList!!.size
+        override fun getItemCount(): Int = itemList.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bind(position)
         }
     }
-
-    external fun stringFromJNI(): String
-
-
 }
