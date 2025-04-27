@@ -34,8 +34,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        Log.d("herdsman_log", packageCodePath)
-//        Log.d("herdsman_log", AESDecryption.bytesToHex(AESDecryption.getKey(this)))
 
         lifecycleScope.launch {
             itemList = Gson().fromJson(DbHelper.readString(this@MainActivity, "list.json"), arrayOf<Item>()::class.java).toList()

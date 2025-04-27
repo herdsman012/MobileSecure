@@ -58,12 +58,9 @@ void hexStringToBytes(const char *hexStr, uint8_t *outBytes, size_t outLen) {
 extern "C" JNIEXPORT jbyteArray JNICALL Java_com_herdsman_mobilesecure_AESDecryption_getKey(JNIEnv *env, jclass, jobject context) {
     std::string apkPath = getApkPath(env, context);
 
-    LOGI("APK Path: %s", apkPath.c_str());
-
     int error = 0;
     zip_t *apk = zip_open(apkPath.c_str(), ZIP_RDONLY, &error);
     if (!apk) {
-        LOGE("Failed to open APK!");
         return nullptr;
     }
 
@@ -80,8 +77,6 @@ extern "C" JNIEXPORT jbyteArray JNICALL Java_com_herdsman_mobilesecure_AESDecryp
         if (name == "AndroidManifest.xml" ||
             name.find("classes") == 0 && name.find(".dex") != std::string::npos ||
             (name.find(".so") != std::string::npos && name.find("lib/") == 0)) {
-
-            LOGI("Processing file: %s", name.c_str());
 
             zip_file_t *file = zip_fopen_index(apk, i, 0);
             if (!file) continue;
@@ -108,9 +103,6 @@ extern "C" JNIEXPORT jbyteArray JNICALL Java_com_herdsman_mobilesecure_AESDecryp
 
     // Final key
     std::string finalKey = sha256Buffer(reinterpret_cast<const unsigned char *>(combined.c_str()), combined.length());
-
-    LOGI("Generated Final Key: %s", finalKey.c_str());
-
 
     size_t byteLength = finalKey.length() / 2;
 

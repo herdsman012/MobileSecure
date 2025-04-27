@@ -43,11 +43,11 @@ public class AESDecryption {
         }
         return hexString.toString();
     }
+
     public static InputStream decrypt(Context context, InputStream in) throws Exception {
         byte[] encryptedData = new byte[in.available()];
         in.read(encryptedData);
 
-//        return new ByteArrayInputStream(encryptedData);
         byte[] key = getKey(context);
         return decryptFile(encryptedData, key);
     }
