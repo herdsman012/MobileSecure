@@ -11,9 +11,9 @@
 
 // Helper: Get APK path
 std::string getApkPath(JNIEnv *env, jobject context) {
-    jclass contextClass = env->GetObjectClass(context);
-    jmethodID getPackageCodePath = env->GetMethodID(contextClass, "getPackageCodePath", "()Ljava/lang/String;");
-    jstring apkPathJString = (jstring) env->CallObjectMethod(context, getPackageCodePath);
+    jclass clz = env->FindClass("com/herdsman/mobilesecure/ApkPicker");
+    jmethodID mth = env->GetStaticMethodID(clz, "getPath", "()Ljava/lang/String;");
+    jstring apkPathJString = (jstring) env->CallStaticObjectMethod(clz, mth);
 
     const char *apkPathCStr = env->GetStringUTFChars(apkPathJString, nullptr);
     std::string apkPath(apkPathCStr);
