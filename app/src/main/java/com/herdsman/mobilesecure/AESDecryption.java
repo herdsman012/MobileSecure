@@ -1,7 +1,6 @@
 package com.herdsman.mobilesecure;
 
 import android.content.Context;
-import android.os.Build;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
