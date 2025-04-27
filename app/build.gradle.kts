@@ -8,11 +8,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.herdsman.mobilesecure"
+        applicationId = "com.herdsman.mobilesecure.secure"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0-secure"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
