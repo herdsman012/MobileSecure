@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AESDecryption {
@@ -15,7 +16,10 @@ public class AESDecryption {
 
     public static native byte[] getKey();
 
-    public static InputStream decryptFile(byte[] encryptedData, byte[] key) throws Exception {
+    public static native InputStream decryptFile(byte[] encryptedData, byte[] key);
+
+
+    public static InputStream decryptFile1(byte[] encryptedData, byte[] key) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
 
@@ -24,12 +28,11 @@ public class AESDecryption {
         System.arraycopy(encryptedData, 0, iv, 0, iv.length);
 
         // Create a Cipher with the IV and key for decryption
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new javax.crypto.spec.IvParameterSpec(iv));
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new IvParameterSpec(iv));
 
         // Decrypt the data
         return new CipherInputStream(new ByteArrayInputStream(encryptedData, 16, encryptedData.length - 16), cipher);
     }
-
 
     public static InputStream decrypt(InputStream in) throws Exception {
         byte[] encryptedData = new byte[in.available()];
@@ -39,5 +42,4 @@ public class AESDecryption {
 
         return decryptFile(encryptedData, key);
     }
-
 }

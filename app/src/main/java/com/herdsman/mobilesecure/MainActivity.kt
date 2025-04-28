@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.herdsman.mobilesecure.databinding.ActivityMainBinding
@@ -32,7 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        binding.recyclerView.addItemDecoration(dividerItemDecoration)
         lifecycleScope.launch {
             itemList = Gson().fromJson(DbHelper.readString(this@MainActivity, "list.json"), arrayOf<Item>()::class.java).toList()
             binding.recyclerView.adapter = ItemAdapter()
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             fun bind(position: Int) {
                 val item = itemList[position]
                 binding.titleView.text = item.title
-                binding.contentView.text = item.content
+//                binding.contentView.text = item.content
 
                 binding.root.setOnClickListener {
                     with(binding.root.context) {

@@ -13,13 +13,13 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/content_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:singleLine="true" />
+    <!--    <androidx.appcompat.widget.AppCompatTextView-->
+    <!--        android:id="@+id/content_view"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        android:singleLine="true" />-->
 
 </androidx.appcompat.widget.LinearLayoutCompat>
