@@ -34,7 +34,7 @@ object DbHelper {
 
     fun readInputStream(context: Context, path: String): InputStream? = readSpecificFileFromZip(
         context,
-        context.assets.open("data.zip"), path
+        context.assets.open("data.enc"), path
     )
 
     fun readString(context: Context, path: String): String = IOUtils.toString(readInputStream(context, path), StandardCharsets.UTF_8)
