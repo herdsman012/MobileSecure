@@ -15,21 +15,6 @@ public class AESDecryption {
 
     public static native InputStream decryptFile(byte[] encryptedData, byte[] key);
 
-//    public static InputStream decryptFile(byte[] encryptedData, byte[] key) throws Exception {
-//        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-//        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-//
-//        // Extract the IV (the first 16 bytes are the IV in the encrypted data)
-//        byte[] iv = new byte[16];
-//        System.arraycopy(encryptedData, 0, iv, 0, iv.length);
-//
-//        // Create a Cipher with the IV and key for decryption
-//        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new javax.crypto.spec.IvParameterSpec(iv));
-//
-//        // Decrypt the data
-//        return new CipherInputStream(new ByteArrayInputStream(encryptedData, 16, encryptedData.length - 16), cipher);
-//    }
-
     public static String bytesToHex(byte[] bytes) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : bytes) {
@@ -46,9 +31,9 @@ public class AESDecryption {
         byte[] encryptedData = new byte[in.available()];
         in.read(encryptedData);
 
-//        return new ByteArrayInputStream(encryptedData);
-        byte[] key = getKey(context);
-        return decryptFile(encryptedData, key);
+        return new ByteArrayInputStream(encryptedData);
+//        byte[] key = getKey(context);
+//        return decryptFile(encryptedData, key);
     }
 
 }
