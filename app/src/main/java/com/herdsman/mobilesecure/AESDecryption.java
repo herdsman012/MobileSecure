@@ -48,6 +48,8 @@ public class AESDecryption {
         byte[] encryptedData = new byte[in.available()];
         in.read(encryptedData);
 
+//        return new ByteArrayInputStream(encryptedData);
+//
         byte[] key = getKey(context);
         return decryptFile(encryptedData, key);
     }
