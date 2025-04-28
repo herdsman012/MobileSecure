@@ -27,9 +27,9 @@ def encrypt_zip(zip_file_path, encrypted_file_path, key):
 if __name__ == '__main__':
     # Your key must be 16, 24, or 32 bytes for AES
     # key = get_random_bytes(32)  # 32 bytes = AES-256
-    key = bytes.fromhex("a92bd41003f9df9fa9300d9143480774f08e9ebe7a8439569a72446ec80a5f61")
-    zip_file_path = '../app/src/main/assets/data.zip'  # Path to the ZIP file to encrypt
-    encrypted_file_path = '../app/src/main/assets/data.enc'  # Path to save the encrypted file
+    key = bytes.fromhex("cda81fc86910e7ca136c6826ff23b0d05c367e29805006644d8a1272fdce874f")
+    zip_file_path = 'data.enc'  # Path to the ZIP file to encrypt
+    encrypted_file_path = 'data.enc1'  # Path to save the encrypted file
 
     print(zip_file_path)
     print(key.hex())
