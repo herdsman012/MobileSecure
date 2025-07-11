@@ -112,4 +112,4 @@ app/
 
 ## Contact
 
-**Developer:** [Herdsman]
+**Developer:** [HERDSMAN](mailto:quinnmkeitel@gmail.com)
